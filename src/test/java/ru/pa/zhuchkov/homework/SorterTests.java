@@ -58,9 +58,7 @@ public class SorterTests {
             list.add(i);
         }
 
-        assertThrows(IllegalArgumentException.class, () -> {
-            sorter.sort(list);
-        });
+        assertThrows(IllegalArgumentException.class, () -> sorter.sort(list));
     }
 
     @Test
@@ -79,9 +77,8 @@ public class SorterTests {
             reversed.add(i);
         }
 
-        assertThrows(IllegalArgumentException.class, () -> {
-            sorter.sort(reversed, Sorter.Algorithm.BUBBLE);
-        });
+        assertThrows(IllegalArgumentException.class,
+                () -> sorter.sort(reversed, Sorter.Algorithm.BUBBLE));
     }
 
     @Test
@@ -113,9 +110,8 @@ public class SorterTests {
     void specificSortNotFound() {
         final Sorter sorter = new Sorter(new BuiltinSorterStrategy());
 
-        assertThrows(NoSuchElementException.class, () -> {
-            sorter.sort(List.of(3, 1, 2), Sorter.Algorithm.BUBBLE);
-        });
+        assertThrows(NoSuchElementException.class,
+                () -> sorter.sort(List.of(3, 1, 2), Sorter.Algorithm.BUBBLE));
     }
 
     @Test
@@ -133,8 +129,6 @@ public class SorterTests {
             }
         });
 
-        assertThrows(UnsupportedOperationException.class, () -> {
-            sorter.sort(List.of(1, 2, 3));
-        });
+        assertThrows(UnsupportedOperationException.class, () -> sorter.sort(List.of(1, 2, 3)));
     }
 }
