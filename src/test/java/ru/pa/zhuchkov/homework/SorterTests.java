@@ -20,10 +20,7 @@ public class SorterTests {
 
     @Test
     void multipleSorts() {
-        final Sorter sorter = new Sorter();
-        sorter.addStrategy(new BuiltinSorterStrategy());
-        sorter.addStrategy(new BubbleSorterStrategy());
-
+        final Sorter sorter = new Sorter(new BuiltinSorterStrategy(), new BubbleSorterStrategy());
         assertEquals(List.of(1, 2, 3), sorter.sort(List.of(3, 1, 2)));
     }
 
@@ -37,9 +34,7 @@ public class SorterTests {
 
     @Test
     void fallbackSort() {
-        final Sorter sorter = new Sorter();
-        sorter.addStrategy(new BubbleSorterStrategy());
-        sorter.addStrategy(new BuiltinSorterStrategy());
+        final Sorter sorter = new Sorter(new BuiltinSorterStrategy(), new BubbleSorterStrategy());
 
         final int LIST_SIZE = 11000;
         List<Integer> sorted = new ArrayList<>(LIST_SIZE);
@@ -57,8 +52,7 @@ public class SorterTests {
 
     @Test
     void allSortsFailed() {
-        final Sorter sorter = new Sorter();
-        sorter.addStrategy(new BubbleSorterStrategy());
+        final Sorter sorter = new Sorter(new BubbleSorterStrategy());
 
         final int LIST_SIZE = 11000;
         List<Integer> list = new ArrayList<>(LIST_SIZE);
@@ -73,18 +67,13 @@ public class SorterTests {
 
     @Test
     void specificSort() {
-        final Sorter sorter = new Sorter();
-        sorter.addStrategy(new BuiltinSorterStrategy());
-        sorter.addStrategy(new BubbleSorterStrategy());
-
+        final Sorter sorter = new Sorter(new BuiltinSorterStrategy(), new BubbleSorterStrategy());
         assertEquals(List.of(1, 2, 3), sorter.sort(List.of(3, 1, 2), Sorter.Algorithm.BUBBLE));
     }
 
     @Test
     void specificSortFailure() {
-        final Sorter sorter = new Sorter();
-        sorter.addStrategy(new BubbleSorterStrategy());
-        sorter.addStrategy(new BuiltinSorterStrategy());
+        final Sorter sorter = new Sorter(new BuiltinSorterStrategy(), new BubbleSorterStrategy());
 
         final int LIST_SIZE = 11000;
         List<Integer> reversed = new ArrayList<>(LIST_SIZE);
@@ -124,8 +113,7 @@ public class SorterTests {
 
     @Test
     void specificSortNotFound() {
-        final Sorter sorter = new Sorter();
-        sorter.addStrategy(new BuiltinSorterStrategy());
+        final Sorter sorter = new Sorter(new BuiltinSorterStrategy());
 
         assertThrows(NoSuchElementException.class, () -> {
             sorter.sort(List.of(3, 1, 2), Sorter.Algorithm.BUBBLE);

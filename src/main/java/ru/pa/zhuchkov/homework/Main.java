@@ -34,9 +34,7 @@ public class Main {
     }
 
     public static void main(String[] args) throws IOException {
-        final Sorter sorter = new Sorter();
-        sorter.addStrategy(new BubbleSorterStrategy());
-        sorter.addStrategy(new BuiltinSorterStrategy());
+        final Sorter sorter = new Sorter(new BubbleSorterStrategy(), new BuiltinSorterStrategy());
 
         final BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 

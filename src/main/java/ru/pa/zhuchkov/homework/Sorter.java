@@ -20,7 +20,9 @@ public class Sorter {
     // т. к. я не хочу чтобы стратегия знала, что её используют не одну
     private final List<Strategy> strategies = new ArrayList<>();
 
-    public Sorter() {}
+    public Sorter(Strategy... strategies) {
+        this.strategies.addAll(List.of(strategies));
+    }
 
     public void addStrategy(Strategy strategy) {
         strategies.add(strategy);
