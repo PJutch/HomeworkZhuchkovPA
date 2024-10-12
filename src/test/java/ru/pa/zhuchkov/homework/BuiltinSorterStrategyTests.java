@@ -22,7 +22,12 @@ public class BuiltinSorterStrategyTests {
     @Test
     void sortImmutable() {
         final BuiltinSorterStrategy strategy = new BuiltinSorterStrategy();
-
         assertEquals(List.of(1, 2, 3), strategy.sort(List.of(3, 1, 2)));
+    }
+
+    @Test
+    void sortEmpty() {
+        final BuiltinSorterStrategy strategy = new BuiltinSorterStrategy();
+        assertEquals(List.<Integer>of(), strategy.sort(List.<Integer>of()));
     }
 }

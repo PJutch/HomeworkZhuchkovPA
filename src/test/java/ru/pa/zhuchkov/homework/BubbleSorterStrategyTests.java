@@ -26,4 +26,10 @@ public class BubbleSorterStrategyTests {
 
         assertEquals(List.of(1, 2, 3), strategy.sort(List.of(3, 1, 2)));
     }
+
+    @Test
+    void sortEmpty() {
+        final BubbleSorterStrategy strategy = new BubbleSorterStrategy();
+        assertEquals(List.<Integer>of(), strategy.sort(List.<Integer>of()));
+    }
 }
