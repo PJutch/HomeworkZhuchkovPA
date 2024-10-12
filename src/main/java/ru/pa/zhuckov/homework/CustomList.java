@@ -12,9 +12,9 @@ public interface CustomList<T> {
      * Добавляет элемент в конец
      *
      * @param value значение нового элемента
-     * @throws NullPointerException если value null и в коллекцию нельзя добавить null
+     * @throws IllegalArgumentException если value null и в коллекцию нельзя добавить null
      */
-    void add(T value) throws NullPointerException;
+    void add(T value) throws IllegalArgumentException;
 
     /**
      * Добавляет элемент по индексу.
@@ -25,9 +25,9 @@ public interface CustomList<T> {
      *              Если index == length, вставка в конец
      * @param value значение нового элемента
      * @throws IndexOutOfBoundsException если индекс вне [0, length]
-     * @throws NullPointerException если value null и в коллекцию нельзя добавить null
+     * @throws IllegalArgumentException если value null и в коллекцию нельзя добавить null
      */
-    void add(int index, T value) throws IndexOutOfBoundsException, NullPointerException;
+    void add(int index, T value) throws IndexOutOfBoundsException, IllegalArgumentException;
 
     /**
      * Получает значение элемента с данным индексом

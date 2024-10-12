@@ -30,9 +30,10 @@ public class CustomArrayList<T> implements CustomList<T> {
      * Время работы - O(n), амортизированное O(1)
      *
      * @param value значение элемента, добавленного в конец списка
+     * @throws IllegalArgumentException если value == null
      */
     @Override
-    public void add(T value) {
+    public void add(T value) throws IllegalArgumentException {
         add(length, value);
     }
 
@@ -45,9 +46,11 @@ public class CustomArrayList<T> implements CustomList<T> {
      *              Если index == length, вставка в конец
      * @param value значение элемента, добавленного в конец списка
      * @throws IndexOutOfBoundsException если индекс вне [index, length]
+     * @throws IllegalArgumentException если value == null
      */
     @Override
-    public void add(int index, T value) throws IndexOutOfBoundsException {
+    public void add(int index, T value)
+            throws IndexOutOfBoundsException, IllegalArgumentException {
         if (value == null) {
             throw new NullPointerException("null values aren't allowed in CustomArrayList");
         }
@@ -99,13 +102,14 @@ public class CustomArrayList<T> implements CustomList<T> {
             throw new IndexOutOfBoundsException(index);
         }
 
-        T oldValue = get(index);
-
-        for (int i = index; i < length + 1; ++i) {
-            values[i] = values[i + 1];
-        }
-
-        values[length] = null; // Удаляем лишнюю ссылку, чтобы память не утекала
+        T oldValue = values[index];
+        values[index] = null;
+        Arrays.sort(values, index, values.length, (T o1, T o2) -> {
+            if (o1 == null && o2 == null) return 0;
+            if (o1 == null) return 1;
+            if (o2 == null) return -1;
+            return 0;
+        });
         --length;
 
         return oldValue;
