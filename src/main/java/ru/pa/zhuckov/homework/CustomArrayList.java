@@ -88,7 +88,7 @@ public class CustomArrayList<T> implements CustomList<T> {
 
     /**
      * Удаляет элемент с индексом index
-     * Время работы - O(n)
+     * Время работы - O(n log n), близко к O(n)
      * Время удаления в конце - O(1)
      *
      * @param index индекс удаляемого элемента (начиная с 0)
