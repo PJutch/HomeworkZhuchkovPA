@@ -27,9 +27,7 @@ public class SorterTests {
     @Test
     void noSorts() {
         final Sorter sorter = new Sorter();
-        assertThrows(NoSuchElementException.class, () -> {
-            sorter.sort(List.of(3, 2, 1));
-        });
+        assertThrows(NoSuchElementException.class, () -> sorter.sort(List.of(3, 2, 1)));
     }
 
     @Test
@@ -117,6 +115,26 @@ public class SorterTests {
 
         assertThrows(NoSuchElementException.class, () -> {
             sorter.sort(List.of(3, 1, 2), Sorter.Algorithm.BUBBLE);
+        });
+    }
+
+    @Test
+    void inplaceSort() {
+        final Sorter sorter = new Sorter(new Sorter.Strategy() {
+            @Override
+            public List<Integer> sort(List<Integer> list) {
+                list.sort(null);
+                return list;
+            }
+
+            @Override
+            public Sorter.Algorithm algorithm() {
+                return Sorter.Algorithm.MERGE;
+            }
+        });
+
+        assertThrows(UnsupportedOperationException.class, () -> {
+            sorter.sort(List.of(1, 2, 3));
         });
     }
 }

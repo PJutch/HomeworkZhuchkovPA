@@ -37,7 +37,7 @@ public class Sorter {
             }
 
             try {
-                return strategy.sort(list);
+                return strategy.sort(List.copyOf(list));
             } catch (RuntimeException exception) {
                 lastException = exception;
             }
