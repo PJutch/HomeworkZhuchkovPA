@@ -5,9 +5,9 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import org.junit.jupiter.api.Test;
 
-import java.awt.image.AreaAveragingScaleFilter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 public class SorterTests {
     @Test
@@ -24,15 +24,13 @@ public class SorterTests {
         sorter.addStrategy(new BuiltinSorterStrategy());
         sorter.addStrategy(new BubbleSorterStrategy());
 
-        final List<Integer> list = new ArrayList<>();
-
         assertEquals(List.of(1, 2, 3), sorter.sort(List.of(3, 1, 2)));
     }
 
     @Test
     void noSorts() {
         final Sorter sorter = new Sorter();
-        assertThrows(IllegalStateException.class, () -> {
+        assertThrows(NoSuchElementException.class, () -> {
             sorter.sort(List.of(3, 2, 1));
         });
     }
@@ -70,6 +68,67 @@ public class SorterTests {
 
         assertThrows(IllegalArgumentException.class, () -> {
             sorter.sort(list);
+        });
+    }
+
+    @Test
+    void specificSort() {
+        final Sorter sorter = new Sorter();
+        sorter.addStrategy(new BuiltinSorterStrategy());
+        sorter.addStrategy(new BubbleSorterStrategy());
+
+        assertEquals(List.of(1, 2, 3), sorter.sort(List.of(3, 1, 2), Sorter.Algorithm.BUBBLE));
+    }
+
+    @Test
+    void specificSortFailure() {
+        final Sorter sorter = new Sorter();
+        sorter.addStrategy(new BubbleSorterStrategy());
+        sorter.addStrategy(new BuiltinSorterStrategy());
+
+        final int LIST_SIZE = 11000;
+        List<Integer> reversed = new ArrayList<>(LIST_SIZE);
+        for (int i = LIST_SIZE - 1; i >= 0; i--) {
+            reversed.add(i);
+        }
+
+        assertThrows(IllegalArgumentException.class, () -> {
+            sorter.sort(reversed, Sorter.Algorithm.BUBBLE);
+        });
+    }
+
+    @Test
+    void specificSortFallback() {
+        final Sorter sorter = new Sorter();
+        sorter.addStrategy(new BubbleSorterStrategy());
+        sorter.addStrategy(new BuiltinSorterStrategy() {
+            @Override
+            public Sorter.Algorithm algorithm() {
+                return Sorter.Algorithm.BUBBLE;
+            }
+        });
+
+        final int LIST_SIZE = 11000;
+        List<Integer> sorted = new ArrayList<>(LIST_SIZE);
+        for (int i = 0; i < LIST_SIZE; i++) {
+            sorted.add(i);
+        }
+
+        List<Integer> reversed = new ArrayList<>(LIST_SIZE);
+        for (int i = LIST_SIZE - 1; i >= 0; i--) {
+            reversed.add(i);
+        }
+
+        assertEquals(sorted, sorter.sort(reversed));
+    }
+
+    @Test
+    void specificSortNotFound() {
+        final Sorter sorter = new Sorter();
+        sorter.addStrategy(new BuiltinSorterStrategy());
+
+        assertThrows(NoSuchElementException.class, () -> {
+            sorter.sort(List.of(3, 1, 2), Sorter.Algorithm.BUBBLE);
         });
     }
 }

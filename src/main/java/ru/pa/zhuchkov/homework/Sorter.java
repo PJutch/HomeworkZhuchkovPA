@@ -1,11 +1,23 @@
 package ru.pa.zhuchkov.homework;
 
+import java.rmi.NoSuchObjectException;
+import java.security.KeyException;
+import java.security.NoSuchAlgorithmException;
+import java.security.NoSuchProviderException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 public class Sorter {
+    public enum Algorithm {
+        ANY,
+        BUBBLE,
+        MERGE
+    }
+
     public interface Strategy {
         List<Integer> sort(List<Integer> list);
+        Algorithm algorithm();
     }
 
     // Список вместо цепочки ответственности,
@@ -18,9 +30,14 @@ public class Sorter {
         strategies.add(strategy);
     }
 
-    List<Integer> sort(List<Integer> list) throws IllegalStateException {
+    public List<Integer> sort(List<Integer> list, Algorithm type)
+            throws IllegalStateException {
         RuntimeException lastException = null;
         for (Strategy strategy : strategies) {
+            if (type != Algorithm.ANY && strategy.algorithm() != type) {
+                continue;
+            }
+
             try {
                 return strategy.sort(list);
             } catch (RuntimeException exception) {
@@ -30,8 +47,11 @@ public class Sorter {
 
         if (lastException != null) {
             throw lastException;
-        } else {
-            throw new IllegalStateException("Sorter requires at least one strategy to be provided");
         }
+        throw new NoSuchElementException("No strategy with provided algorithm exists");
+    }
+
+    public List<Integer> sort(List<Integer> list) throws IllegalStateException {
+        return sort(list, Algorithm.ANY);
     }
 }

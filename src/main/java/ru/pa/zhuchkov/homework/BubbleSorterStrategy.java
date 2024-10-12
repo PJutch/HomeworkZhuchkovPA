@@ -1,6 +1,5 @@
 package ru.pa.zhuchkov.homework;
 
-import javax.naming.SizeLimitExceededException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,5 +21,10 @@ public class BubbleSorterStrategy implements Sorter.Strategy {
             }
         }
         return result;
+    }
+
+    @Override
+    public Sorter.Algorithm algorithm() {
+        return Sorter.Algorithm.BUBBLE;
     }
 }
