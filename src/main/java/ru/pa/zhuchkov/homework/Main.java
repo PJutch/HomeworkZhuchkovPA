@@ -1,4 +1,4 @@
-package ru.pa.zhuckov.homework;
+package ru.pa.zhuchkov.homework;
 
 public class Main {
     public static void main(String[] args) {

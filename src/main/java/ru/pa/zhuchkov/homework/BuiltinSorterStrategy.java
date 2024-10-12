@@ -1,4 +1,4 @@
-package ru.pa.zhuckov.homework;
+package ru.pa.zhuchkov.homework;
 
 import java.util.ArrayList;
 import java.util.List;
