@@ -7,11 +7,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class BuiltinSorterStrategyTests {
-    private final BuiltinSorterStrategy strategy = new BuiltinSorterStrategy();
-
     @Test
     void sort() {
-        List<Integer> list = new ArrayList<Integer>();
+        final BuiltinSorterStrategy strategy = new BuiltinSorterStrategy();
+
+        final List<Integer> list = new ArrayList<>();
         list.add(3);
         list.add(2);
         list.add(1);
@@ -21,6 +21,8 @@ public class BuiltinSorterStrategyTests {
 
     @Test
     void sortImmutable() {
+        final BuiltinSorterStrategy strategy = new BuiltinSorterStrategy();
+
         assertEquals(List.of(1, 2, 3), strategy.sort(List.of(3, 1, 2)));
     }
 }
