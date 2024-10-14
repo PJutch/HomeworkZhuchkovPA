@@ -118,7 +118,7 @@ public class SorterTests {
     void inplaceSort() {
         final Sorter sorter = new Sorter(new Sorter.Strategy() {
             @Override
-            public List<Integer> sort(List<Integer> list) {
+            public List<Integer> sort(ImmutableListWrapper<Integer> list) {
                 list.sort(null);
                 return list;
             }

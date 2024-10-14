@@ -1,14 +1,17 @@
 package ru.pa.zhuchkov.homework;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class BuiltinSorterStrategy implements Sorter.Strategy {
     @Override
-    public List<Integer> sort(List<Integer> list) {
-        List<Integer> result = new ArrayList<>(list);
+    public List<Integer> sort(ImmutableListWrapper<Integer> list) {
+        List<Integer> result = list.mutableCopy();
         result.sort(null);
         return result;
+    }
+
+    public List<Integer> sort(List<Integer> list) {
+        return sort(new ImmutableListWrapper<>(list));
     }
 
     @Override

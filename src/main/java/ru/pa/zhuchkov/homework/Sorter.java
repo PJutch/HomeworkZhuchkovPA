@@ -12,7 +12,7 @@ public class Sorter {
     }
 
     public interface Strategy {
-        List<Integer> sort(List<Integer> list);
+        List<Integer> sort(ImmutableListWrapper<Integer> list);
         Algorithm algorithm();
     }
 
@@ -37,7 +37,7 @@ public class Sorter {
             }
 
             try {
-                return strategy.sort(List.copyOf(list));
+                return strategy.sort(new ImmutableListWrapper<>(list));
             } catch (RuntimeException exception) {
                 lastException = exception;
             }
