@@ -5,7 +5,7 @@ import java.util.List;
 public class BuiltinSorterStrategy implements Sorter.Strategy {
     @Override
     public List<Integer> sort(ImmutableListWrapper<Integer> list) {
-        List<Integer> result = list.mutableCopy();
+        List<Integer> result = list.copy();
         result.sort(null);
         return result;
     }

@@ -73,19 +73,10 @@ public class ImmutableListWrapperTests {
     }
 
     @Test
-    void copyFallback() {
-        List<Integer> wrapped = List.of(1, 2, 3);
-        ImmutableListWrapper<Integer> wrapper = new ImmutableListWrapper<>(wrapped);
-        List<Integer> copy = wrapper.copy();
-
-        assertEquals(copy, wrapped);
-    }
-
-    @Test
-    void mutableCopy() {
+    void copyRetainClass() {
         List<Integer> wrapped = new LinkedList<>(List.of(1, 2, 3));
         ImmutableListWrapper<Integer> wrapper = new ImmutableListWrapper<>(wrapped);
-        List<Integer> copy = wrapper.mutableCopy();
+        List<Integer> copy = wrapper.copy();
 
         assertEquals(copy.getClass(), wrapped.getClass());
         assertEquals(copy, wrapped);
@@ -97,12 +88,17 @@ public class ImmutableListWrapperTests {
     }
 
     @Test
-    void mutableCopyFallback() {
+    void copyFallback() {
         List<Integer> wrapped = List.of(1, 2, 3);
         ImmutableListWrapper<Integer> wrapper = new ImmutableListWrapper<>(wrapped);
-        List<Integer> copy = wrapper.mutableCopy();
+        List<Integer> copy = wrapper.copy();
 
         assertEquals(copy.getClass(), ArrayList.class);
         assertEquals(copy, wrapped);
+
+        copy.set(0, 5);
+
+        assertEquals(copy.get(0), 5);
+        assertEquals(wrapped.get(0), 1);
     }
 }

@@ -9,7 +9,7 @@ public class BubbleSorterStrategy implements Sorter.Strategy {
             throw new IllegalArgumentException("List is to big to be sorted with an O(n^2) bubble sort");
         }
 
-        List<Integer> result = list.mutableCopy();
+        List<Integer> result = list.copy();
         for (int iteration = 0; iteration < result.size(); ++iteration) {
             for (int i = 0; i + 1 < result.size(); ++i) {
                 if (result.get(i) > result.get(i + 1)) {

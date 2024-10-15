@@ -166,31 +166,25 @@ public class ImmutableListWrapper<E> implements List<E> {
     }
 
     public List<E> copy() {
+        List<E> copy;
         try {
-            // Создаём список того же класса
             //> All general-purpose Collection implementation classes
-            //> (which typically implement Collection indirectly through one of its subinterfaces)
             //> should provide two "standard" constructors: a void (no arguments) constructor,
             //> which creates an empty collection,
-            //> and a constructor with a single argument of type Collection,
+            //> and *a constructor with a single argument of type Collection*,
             //> which creates a new collection with the same elements as its argument.
-            return (List<E>)
+            copy = (List<E>)
                     wrapped.getClass().getConstructor(Collection.class).newInstance(wrapped);
         } catch (NoSuchMethodException | InvocationTargetException
                  | InstantiationException | IllegalAccessException e) {
-            // Если не можем используем copyOf
-            return List.copyOf(wrapped);
+            return new ArrayList<>(wrapped);
         }
-    }
 
-    public List<E> mutableCopy() {
-        List<E> copy = copy();
         try {
             // Проверяем, что копия изменяема
             copy.retainAll(copy);
             return copy;
-        } catch (UnsupportedOperationException ignored){
-            // Если нет, тупо делаем ArrayList
+        } catch (UnsupportedOperationException ignored) {
             return new ArrayList<>(copy);
         }
     }
