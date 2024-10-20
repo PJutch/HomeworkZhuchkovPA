@@ -1,6 +1,5 @@
 package ru.pa.zhuchkov.homework;
 
-import java.util.HashMap;
 import java.util.Map;
 
 public class Message {
@@ -8,7 +7,7 @@ public class Message {
     private final EnrichmentType enrichmentType;
 
     public enum EnrichmentType {
-        MSISDN;
+        MSISDN
     }
 
     public Message(Map<String, String> content, EnrichmentType enrichmentType) {
