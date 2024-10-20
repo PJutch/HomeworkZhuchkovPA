@@ -93,9 +93,9 @@ public class SorterTests {
         });
 
         final int LIST_SIZE = 11000;
-        List<Integer> sorted = new ArrayList<>(LIST_SIZE);
+        List<Integer> expected = new ArrayList<>(LIST_SIZE);
         for (int i = 0; i < LIST_SIZE; i++) {
-            sorted.add(i);
+            expected.add(i);
         }
 
         List<Integer> reversed = new ArrayList<>(LIST_SIZE);
@@ -103,7 +103,9 @@ public class SorterTests {
             reversed.add(i);
         }
 
-        assertEquals(sorted, sorter.sort(reversed));
+        final List<Integer> actual = sorter.sort(reversed);
+
+        assertEquals(expected, actual);
     }
 
     @Test

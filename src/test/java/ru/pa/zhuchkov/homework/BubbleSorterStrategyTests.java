@@ -17,19 +17,29 @@ public class BubbleSorterStrategyTests {
         list.add(2);
         list.add(1);
 
-        assertEquals(List.of(1, 2, 3), strategy.sort(list));
+        final List<Integer> expected = List.of(1, 2, 3);
+        final List<Integer> actual = strategy.sort(list);
+
+        assertEquals(expected, actual);
     }
 
     @Test
     void sortImmutable() {
         final BubbleSorterStrategy strategy = new BubbleSorterStrategy();
 
-        assertEquals(List.of(1, 2, 3), strategy.sort(List.of(3, 1, 2)));
+        final List<Integer> expected = List.of(1, 2, 3);
+        final List<Integer> actual = strategy.sort(List.of(3, 1, 2));
+
+        assertEquals(expected, actual);
     }
 
     @Test
     void sortEmpty() {
         final BubbleSorterStrategy strategy = new BubbleSorterStrategy();
-        assertEquals(List.<Integer>of(), strategy.sort(List.<Integer>of()));
+
+        final List<Integer> expected = List.of();
+        final List<Integer> actual = strategy.sort(List.of());
+
+        assertEquals(expected, actual);
     }
 }

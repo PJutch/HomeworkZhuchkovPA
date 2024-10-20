@@ -13,9 +13,17 @@ public class ImmutableListWrapperTests {
     void testGet() {
         List<Integer> list = new ImmutableListWrapper<>(List.of(1, 2, 3));
 
-        assertEquals(list.get(0), 1);
-        assertEquals(list.get(1), 2);
-        assertEquals(list.get(2), 3);
+        final int actual1 = list.get(0);
+        final int actual2 = list.get(1);
+        final int actual3 = list.get(2);
+
+        final int expected1 = 1;
+        final int expected2 = 2;
+        final int expected3 = 3;
+
+        assertEquals(actual1, expected1);
+        assertEquals(actual2, expected2);
+        assertEquals(actual3, expected3);
     }
 
     @Test
@@ -53,8 +61,14 @@ public class ImmutableListWrapperTests {
     void subList() {
         List<Integer> list = new ImmutableListWrapper<>(List.of(1, 2, 3));
 
-        assertEquals(list.subList(1, 3).get(0), 2);
-        assertEquals(list.subList(1, 3).get(1), 3);
+        final int actual1 = list.subList(1, 3).get(0);
+        final int actual2 = list.subList(1, 3).get(1);
+
+        final int expected1 = 2;
+        final int expected2 = 3;
+
+        assertEquals(actual1, expected1);
+        assertEquals(actual2, expected2);
     }
 
     @Test
