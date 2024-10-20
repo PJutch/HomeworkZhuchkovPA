@@ -2,6 +2,7 @@ package ru.pa.zhuchkov.homework;
 
 import org.junit.jupiter.api.Test;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.CountDownLatch;
@@ -12,7 +13,7 @@ class ApplicationTest {
 
     @Test
     void enrich() {
-        Message message = new Message();
+        Message message = new Message(new HashMap<>(), Message.EnrichmentType.MSISDN);
         EnrichmentService service = new EnrichmentService();
 
         Message enrichedMessage = service.enrich(message);
@@ -29,7 +30,7 @@ class ApplicationTest {
             for (int i = 0; i < 5; i++) {
                 executorService.submit(() -> {
                     enrichmentResults.add(
-                            app.enrich(new Message()) // message где-то создается
+                            app.enrich(new Message(new HashMap<>(), Message.EnrichmentType.MSISDN)) // message где-то создается
                     );
                     latch.countDown();     // уменьшаем значение latch на 1
                 });
