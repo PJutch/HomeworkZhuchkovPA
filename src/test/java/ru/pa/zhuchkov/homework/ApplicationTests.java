@@ -1,15 +1,13 @@
 package ru.pa.zhuchkov.homework;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.concurrent.*;
-import java.util.stream.IntStream;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.*;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class ApplicationTest {
 
@@ -88,7 +86,6 @@ class ApplicationTest {
         }
 
         final ExecutorService executorService = Executors.newFixedThreadPool(5);
-        CountDownLatch latch = new CountDownLatch(5);
 
         ArrayList<Future<?>> futures = new ArrayList<>(5);
         for (int i_ = 0; i_ < 5; i_++) {
