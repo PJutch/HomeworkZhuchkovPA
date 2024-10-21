@@ -4,13 +4,12 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.concurrent.*;
 import java.util.stream.IntStream;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.CopyOnWriteArrayList;
-import java.util.concurrent.CountDownLatch;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 class ApplicationTest {
 
@@ -41,7 +40,7 @@ class ApplicationTest {
     }
 
     @Test
-    void enrichConcurrent() throws InterruptedException {
+    void enrichConcurrent() throws InterruptedException, ExecutionException {
         UserRepository repository = new HashMapUserRepository();
         repository.updateUserByMsisdn("88005553535",
                 new UserRepository.User("Vasya", "Ivanov"));
@@ -91,17 +90,20 @@ class ApplicationTest {
         final ExecutorService executorService = Executors.newFixedThreadPool(5);
         CountDownLatch latch = new CountDownLatch(5);
 
+        ArrayList<Future<?>> futures = new ArrayList<>(5);
         for (int i_ = 0; i_ < 5; i_++) {
             final int i = i_;
-            executorService.submit(() -> {
+            futures.add(executorService.submit(() -> {
                 Message message = new Message(contents.get(i),
                         Message.EnrichmentType.MSISDN);
 
                 actual.set(i, service.enrich(message));
-                latch.countDown();
-            });
+            }));
         }
-        latch.await();
+
+        for (Future<?> future : futures) {
+            future.get();
+        }
 
         assertEquals(expected, actual);
     }
