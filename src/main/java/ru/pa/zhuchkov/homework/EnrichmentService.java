@@ -2,9 +2,11 @@ package ru.pa.zhuchkov.homework;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class EnrichmentService {
-    private final HashMap<Message.EnrichmentType, Enrichment> enrichments = new HashMap<>();
+    private final ConcurrentHashMap<Message.EnrichmentType, Enrichment> enrichments
+            = new ConcurrentHashMap<>();
 
     public interface Enrichment {
         Map<String, String> enrich(Map<String, String> input);
@@ -20,7 +22,8 @@ public class EnrichmentService {
             return message;
         }
 
-        Map<String, String> newContent = enrichment.enrich(new HashMap<>(message.content()));
+        Map<String, String> newContent
+                = enrichment.enrich(new ConcurrentHashMap<>(message.content()));
         return new Message(newContent, message.enrichmentType());
     }
 }

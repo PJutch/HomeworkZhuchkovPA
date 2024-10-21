@@ -13,7 +13,7 @@ class ApplicationTest {
 
     @Test
     void enrich() {
-        UserRepository repository = new HashMapUserRepository();
+        UserRepository repository = new ConcurrentHashMapUserRepository();
         repository.updateUserByMsisdn("88005553535",
                 new UserRepository.User("Vasya", "Ivanov"));
         repository.updateUserByMsisdn("88005553727",
@@ -39,7 +39,7 @@ class ApplicationTest {
 
     @Test
     void enrichConcurrent() throws InterruptedException, ExecutionException {
-        UserRepository repository = new HashMapUserRepository();
+        UserRepository repository = new ConcurrentHashMapUserRepository();
         repository.updateUserByMsisdn("88005553535",
                 new UserRepository.User("Vasya", "Ivanov"));
         repository.updateUserByMsisdn("88005553727",
@@ -48,36 +48,37 @@ class ApplicationTest {
         EnrichmentService service = new EnrichmentService();
         service.addEnrichment(Message.EnrichmentType.MSISDN, new MsisdnEnrichment(repository));
 
-        List<Map<String, String>> contents = List.of(
+        List<Map<String, String>> contents = new CopyOnWriteArrayList<>(List.of(
                 Map.of("test", "data1", "msisdn", "88005553535"),
                 Map.of("test", "data2", "msisdn", "88005553727"),
                 Map.of("test", "data3", "msisdn", "88005553535"),
                 Map.of("test", "data4", "msisdn", "88005553727"),
                 Map.of("test", "data5")
-        );
+        ));
 
         List<Message> expected = List.of(
-                new Message(Map.of(
+                new Message(new ConcurrentHashMap<>(Map.of(
                         "test", "data1",
                         "msisdn", "88005553535",
                         "firstName", "Vasya",
-                        "lastName", "Ivanov"), Message.EnrichmentType.MSISDN),
-                new Message(Map.of(
+                        "lastName", "Ivanov")), Message.EnrichmentType.MSISDN),
+                new Message(new ConcurrentHashMap<>(Map.of(
                         "test", "data2",
                         "msisdn", "88005553727",
                         "firstName", "Petya",
-                        "lastName", "Petrov"), Message.EnrichmentType.MSISDN),
-                new Message(Map.of(
+                        "lastName", "Petrov")), Message.EnrichmentType.MSISDN),
+                new Message(new ConcurrentHashMap<>(Map.of(
                         "test", "data3",
                         "msisdn", "88005553535",
                         "firstName", "Vasya",
-                        "lastName", "Ivanov"), Message.EnrichmentType.MSISDN),
-                new Message(Map.of(
+                        "lastName", "Ivanov")), Message.EnrichmentType.MSISDN),
+                new Message(new ConcurrentHashMap<>(Map.of(
                         "test", "data4",
                         "msisdn", "88005553727",
                         "firstName", "Petya",
-                        "lastName", "Petrov"), Message.EnrichmentType.MSISDN),
-                new Message(Map.of("test", "data5"), Message.EnrichmentType.MSISDN)
+                        "lastName", "Petrov")), Message.EnrichmentType.MSISDN),
+                new Message(new ConcurrentHashMap<>(Map.of("test", "data5")),
+                        Message.EnrichmentType.MSISDN)
         );
 
         List<Message> actual = new CopyOnWriteArrayList<>();

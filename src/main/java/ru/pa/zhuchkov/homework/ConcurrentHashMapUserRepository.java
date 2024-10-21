@@ -1,9 +1,10 @@
 package ru.pa.zhuchkov.homework;
 
 import java.util.HashMap;
+import java.util.concurrent.ConcurrentHashMap;
 
-public class HashMapUserRepository implements UserRepository {
-    private final HashMap<String, User> usersByMsisdn = new HashMap<>();
+public class ConcurrentHashMapUserRepository implements UserRepository {
+    private final ConcurrentHashMap<String, User> usersByMsisdn = new ConcurrentHashMap<>();
 
     @Override
     public User findByMsisdn(String msisdn) {
