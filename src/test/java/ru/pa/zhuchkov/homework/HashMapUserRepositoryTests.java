@@ -21,7 +21,7 @@ public class HashMapUserRepositoryTests {
     }
 
     @Test
-    void findNotExist() {
+    void findNotExisting() {
         UserRepository userRepository = new HashMapUserRepository();
         userRepository.updateUserByMsisdn("88005553727",
                 new UserRepository.User("Petya", "Petrov"));
