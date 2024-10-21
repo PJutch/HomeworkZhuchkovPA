@@ -50,7 +50,7 @@
                             <transformers>
                                 <transformer implementation=
                                                      "org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
-                                    <mainClass>ru.pa.zhuchkov.homework.Main</mainClass>
+
                                 </transformer>
                             </transformers>
                         </configuration>
