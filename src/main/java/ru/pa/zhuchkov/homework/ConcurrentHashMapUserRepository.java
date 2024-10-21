@@ -1,6 +1,5 @@
 package ru.pa.zhuchkov.homework;
 
-import java.util.HashMap;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class ConcurrentHashMapUserRepository implements UserRepository {
