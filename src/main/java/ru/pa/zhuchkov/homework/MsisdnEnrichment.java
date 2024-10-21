@@ -2,13 +2,14 @@ package ru.pa.zhuchkov.homework;
 
 import java.util.Map;
 
-public class MsisdnEnrichment {
+public class MsisdnEnrichment implements EnrichmentService.Enrichment {
     private final UserRepository repository;
 
     MsisdnEnrichment(UserRepository repository) {
         this.repository = repository;
     }
 
+    @Override
     public Map<String, String> enrich(Map<String, String> input) {
         String msisdn = input.get("msisdn");
         if (msisdn == null) {
